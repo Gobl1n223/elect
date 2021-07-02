@@ -19,18 +19,21 @@ public class Parser {
     public static void main(String[] args) throws IOException {
         Document page = getPage();
         Element tableWth = page.select("table[class=train_schedule_table stacktable desktop]").first();
+        Element tableWthes = page.select("div[class=int_content]").first();
         Elements stations = tableWth.select("tr[class]");
-        Elements time = stations.select("span[class=_time]");
+        String raspisanie = tableWthes.select("h1[class=electr_schedule]").text();
+        System.out.println("Расписание маршрута: " +raspisanie);
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
-        for (Element station : stations){
-           String naz = station.select("a[href]").text();
-           System.out.println(naz);
-            String vrem = station.select("span[class=_time]").text();
-            System.out.println(vrem );
-            System.out.println("---------------");
-
+        for(Element ass : stations){
+            String station = ass.select("tr[class]").text();
+            System.out.println(station);
+            System.out.println("---------------------------------");
         }
 
+        Element utoc = page.select("div[class=warning]").first();
+        String utocnen = utoc.select("p").text();
+System.out.println("Внимание: " + utocnen);
 
     }
 }
